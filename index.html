@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portalbound — Tavi & Rumo | Recovery Build</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101b2b;color:#e9e3cb;font:15px system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;padding:16px}
+main{width:min(100%,1100px)}h1{font-size:22px;margin:0 0 5px}p{margin:4px 0 12px;color:#aec8c6}
+canvas{width:100%;aspect-ratio:16/9;display:block;image-rendering:pixelated;border:3px solid #456a68;background:#16233a;border-radius:7px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}button{background:#263d50;color:#fff6dd;border:1px solid #5b7d7d;padding:9px 14px;border-radius:8px;cursor:pointer;touch-action:none}
+button:active{background:#4b827e}.foot{color:#9dbaaf;font-size:12px;margin-top:12px}
+</style></head><body><main>
+<h1>PORTALBOUND: TAVI &amp; RUMO</h1>
+<p>Playable recovery prototype — not the original DINO Engine V5.</p>
+<canvas id="game" width="640" height="360" aria-label="Pixel world game preview"></canvas>
+<div class="controls"><button data-key="ArrowLeft">◀ Left</button><button data-key="ArrowRight">Right ▶</button><button data-key="Space">Jump</button><button data-key="KeyF">Fire</button><button data-key="KeyJ">Punch</button><button data-key="KeyK">Block</button><button id="restart">Restart</button></div>
+<p class="foot">Keyboard: A/D or ←/→ move, W/Space jump, F fireball, J punch, K block. Rumo follows Tavi. Reach the portal at the right.</p>
+</main>
+<script>
+"use strict";
+const cv=document.getElementById('game'),c=cv.getContext('2d');c.imageSmoothingEnabled=false;
+const W=640,H=360,ground=288,world=2350,keys=new Set();
+const T={x:80,y:ground,vx:0,vy:0,facing:1,grounded:true,step:0,block:0,punch:0,fireCD:0,health:3};
+const R={x:20,y:ground,vx:0,step:0};
+let camera=0,last=0,won=false,particles=[],shots=[],hazards=[{x:605,a:0},{x:1135,a:1},{x:1740,a:2}];
+const clamp=(v,a,b)=>Math.max(a,Math.min(v,b));
+const rect=(x,y,w,h,co)=>{c.fillStyle=co;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));};
+const line=(pts,color,width=2)=>{c.strokeStyle=color;c.lineWidth=width;c.beginPath();pts.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));c.stroke()};
+function restart(){Object.assign(T,{x:80,y:ground,vx:0,vy:0,facing:1,grounded:true,step:0,block:0,punch:0,fireCD:0,health:3});Object.assign(R,{x:20,y:ground,vx:0,step:0});won=false;shots=[];particles=[];camera=0;hazards=[{x:605,a:0},{x:1135,a:1},{x:1740,a:2}]}
+document.getElementById('restart').onclick=restart;
+const controls={'ArrowLeft':'ArrowLeft','KeyA':'ArrowLeft','ArrowRight':'ArrowRight','KeyD':'ArrowRight','Space':'Space','KeyW':'Space','KeyF':'KeyF','KeyJ':'KeyJ','KeyK':'KeyK'};
+window.addEventListener('keydown',e=>{const k=controls[e.code];if(k){keys.add(k);e.preventDefault()}});
+window.addEventListener('keyup',e=>{const k=controls[e.code];if(k){keys.delete(k);e.preventDefault()}});
+window.addEventListener('blur',()=>keys.clear());
+document.querySelectorAll('[data-key]').forEach(b=>{const k=b.dataset.key;b.onpointerdown=e=>{b.setPointerCapture(e.pointerId);keys.add(k)};b.onpointerup=b.onpointercancel=()=>keys.delete(k)});
+function update(dt){if(won)return;dt=Math.min(dt,.045);
+let dir=(keys.has('ArrowRight')?1:0)-(keys.has('ArrowLeft')?1:0);T.vx=dir*125;if(dir)T.facing=dir;
+if(keys.has('Space')&&T.grounded){T.vy=-285;T.grounded=false}
+T.vy+=760*dt;T.x=clamp(T.x+T.vx*dt,20,world-35);T.y+=T.vy*dt;
+if(T.y>=ground){T.y=ground;T.vy=0;T.grounded=true}
+if(T.grounded&&dir)T.step+=dt*12;
+T.block=keys.has('KeyK')?1:0;T.punch=Math.max(0,T.punch-dt);T.fireCD=Math.max(0,T.fireCD-dt);
+if(keys.has('KeyJ')&&T.punch<=0)T.punch=.22;
+if(keys.has('KeyF')&&T.fireCD<=0){shots.push({x:T.x+T.facing*19,y:T.y-42,v:T.facing*255,life:2});T.fireCD=.32}
+R.vx=clamp((T.x-63-R.x)*4,-110,110);R.x+=R.vx*dt;R.y=ground;R.step+=Math.abs(R.vx)*dt*.08;
+R.x=Math.min(R.x,T.x-45);camera=clamp(T.x-220,0,world-W);
+shots.forEach(s=>{s.x+=s.v*dt;s.life-=dt});
+shots=shots.filter(s=>s.life>0&&s.x>0&&s.x<world);
+hazards.forEach(h=>{if(h.a<0)return;
+if(shots.some(s=>Math.abs(s.x-h.x)<17&&Math.abs(s.y-(ground-18))<30)){h.a=-1;for(let i=0;i<8;i++)particles.push({x:h.x,y:ground-20,vx:Math.cos(i)*60,vy:Math.sin(i)*55,life:.4})}
+if(Math.abs(T.x-h.x)<22&&T.grounded&&!T.block){if(T.punch>0){h.a=-1}else{T.x-=T.facing*14;T.health=Math.max(0,T.health-.015)}}
+});
+particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt});particles=particles.filter(p=>p.life>0);
+if(T.x>world-130)won=true;
+}
+function landscape(time){
+const sky=c.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#15243b');sky.addColorStop(1,'#285153');c.fillStyle=sky;c.fillRect(0,0,W,H);
+for(let i=0;i<42;i++){let x=((i*163-camera*.07)%W+W)%W,y=12+(i*29)%130;rect(x,y,2,2,i%3?'#47687b':'#8bb0a9')}
+for(let layer=0;layer<2;layer++)for(let i=0;i<28;i++){let x=i*105-camera*(.18+layer*.18)-45,y=ground-24+(i%4)*4;rect(x,y-52,8,75,layer?'#234b48':'#1d3d4a');c.fillStyle=layer?'#2a5b52':'#244b54';c.beginPath();c.moveTo(x-26,y-22);c.lineTo(x+4,y-100-(i%3)*9);c.lineTo(x+35,y-22);c.fill()}
+rect(0,ground,W,H-ground,'#33554b');rect(0,ground,W,6,'#608266');
+for(let x=-camera%32;x<W;x+=32){rect(x,ground+21,14,3,'#3d6859');rect(x+16,ground+48,5,2,'#496e5a')}
+for(let x=250;x<world;x+=340){let xx=x-camera;rect(xx,ground-12,9,12,'#5b7762');rect(xx-9,ground-27,28,13,'#315c4c');rect(xx-4,ground-37,18,15,'#427557')}
+}
+function drawTavi(x,y,time){
+const px=Math.round(x-camera),py=Math.round(y),s=Math.sin(T.step);
+rect(px-12,py-54,6,27,'#34495d');rect(px-14,py-55,7,27,'#684f5d');
+let feet=T.grounded?0:8,shift=T.grounded?Math.round(s*5):5;
+line([[px-5,py-20],[px-7+shift,py-8-feet],[px-10+shift,py-1-feet]],'#14263d',8);
+line([[px+4,py-20],[px+7-shift,py-8-feet],[px+12-shift,py-1-feet]],'#14263d',8);
+line([[px-5,py-20],[px-7+shift,py-8-feet]],'#466481',5);
+line([[px+4,py-20],[px+7-shift,py-8-feet]],'#466481',5);
+rect(px-16+shift,py-5-feet,14,5,'#203b52');rect(px+5-shift,py-5-feet,14,5,'#203b52');
+rect(px-10,py-45,25,29,'#142338');rect(px-8,py-43,20,25,'#6f9b77');rect(px-8,py-43,20,5,'#dd776c');
+rect(px-7,py-60,16,9,'#d29f74');rect(px-15,py-84,32,28,'#172436');rect(px-12,py-82,26,26,'#f0cca0');
+rect(px-14,py-89,32,8,'#573b47');rect(px-16,py-83,8,12,'#573b47');
+rect(px+(T.facing>0?8:-8),py-70,4,4,'#1b2636');
+let armX=px+T.facing*(T.punch>0?30:16),armY=py-(T.block?66:38);
+line([[px+T.facing*10,py-39],[armX,armY]],'#e6bc90',8);
+if(T.block){rect(px+T.facing*19-7,py-74,13,27,'#6eb2ba');rect(px+T.facing*19-5,py-72,9,22,'#265e71')}
+if(T.punch>0)rect(armX-4,armY-5,10,10,'#f6cea2');
+}
+function drawRumo(x,y){
+let px=Math.round(x-camera),py=Math.round(y),s=Math.sin(R.step),headx=px+44;
+c.fillStyle='#162b39';c.beginPath();c.moveTo(px+4,py-19);c.lineTo(px-35,py-9+s*2);c.lineTo(px-17,py-29);c.closePath();c.fill();
+c.fillStyle='#418c71';c.beginPath();c.moveTo(px+4,py-18);c.lineTo(px-32,py-12+s*2);c.lineTo(px-14,py-24);c.closePath();c.fill();
+line([[px+10,py-20],[px+7+s*4,py-8],[px+2+s*4,py]],'#173443',12);
+line([[px+32,py-20],[px+37-s*4,py-7],[px+43-s*4,py]],'#173443',12);
+line([[px+10,py-20],[px+7+s*4,py-8]],'#58a77e',8);
+line([[px+32,py-20],[px+37-s*4,py-7]],'#58a77e',8);
+rect(px+2,py-38,43,23,'#1b3844');rect(px+5,py-36,39,19,'#388d70');rect(px+12,py-22,25,5,'#a3c58b');
+for(let k=0;k<4;k++){let xx=px+7+k*10;c.fillStyle='#dbcf83';c.beginPath();c.moveTo(xx,py-35);c.lineTo(xx+5,py-48);c.lineTo(xx+11,py-35);c.fill()}
+rect(px+35,py-52,29,25,'#173445');rect(px+37,py-50,27,21,'#4a9c7a');rect(px+52,py-38,19,11,'#72ba8c');
+rect(px+53,py-45,5,5,'#0c2033');rect(px+43,py-29,24,5,'#275c58');
+line([[px+35,py-22],[px+50,py-19],[px+51,py-13]],'#3e8e72',7)
+}
+function drawPortal(time){
+let x=world-76-camera,y=ground-54;
+for(let [rad,col] of [[54,'#175b51'],[46,'#238b70'],[37,'#38cda1'],[29,'#9bfbc4']]){
+c.strokeStyle=col;c.lineWidth=6;c.beginPath();c.ellipse(x,y,rad*.7,rad,0,0,Math.PI*2);c.stroke()
+}
+c.fillStyle='#1d5049';c.beginPath();c.ellipse(x,y,17,26,0,0,Math.PI*2);c.fill();
+for(let i=0;i<12;i++){let a=i*2+time*2,r=7+(i*5)%24;rect(x+Math.sin(a)*r,y+Math.cos(a)*r,3,3,'#c4ffcb')}
+}
+function draw(time){
+landscape(time);drawPortal(time);
+hazards.filter(h=>h.a>=0).forEach(h=>{let x=h.x-camera;rect(x-10,ground-21,20,21,'#482e46');rect(x-7,ground-18,14,13,'#b75f72');rect(x-4,ground-16,8,3,'#f8bd75')});
+shots.forEach(s=>{let x=s.x-camera;rect(x-7,s.y-5,14,10,'#f99542');rect(x-3,s.y-3,8,6,'#fff1a2')});
+particles.forEach(p=>rect(p.x-camera,p.y,4,4,'#edae67'));drawRumo(R.x,R.y);drawTavi(T.x,T.y,time);
+rect(7,6,270,34,'#11263a');rect(11,10,4,25,'#6bbd98');
+c.fillStyle='#f3e9ce';c.font='bold 13px monospace';c.fillText('PORTALBOUND // RECOVERY V0.1',24,20);
+c.font='11px monospace';c.fillText('TAVI + RUMO  ·  CHAPTER 01',24,33);
+c.fillStyle='#f7dcc1';c.font='13px monospace';c.fillText('♥'.repeat(T.health),W-54,25);
+if(won){rect(105,130,430,90,'#14263a');c.fillStyle='#b5f9ca';c.font='bold 24px monospace';c.fillText('PORTAL REACHED',172,167);c.fillStyle='#f8eccc';c.font='13px monospace';c.fillText('Press Restart to replay',220,192)}
+}
+function loop(now){let dt=(now-last)/1000||.016;last=now;update(dt);draw(now/1000);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+</script></body></html>
