@@ -1,0 +1,1 @@
+{"name":"portalbound-tavi-rumo-recovery","version":"0.1.0","private":true,"type":"module","scripts":{"test":"node tests/source-check.mjs"},"description":"Standalone Tavi and Rumo recovery preview, not original DINO Engine V5"}
