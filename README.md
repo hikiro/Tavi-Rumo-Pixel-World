@@ -1,27 +1,29 @@
-# Tavi & Rumo — Pixel World
+# Portalbound: Tavi & Rumo — recovery build
 
-A playable pixel-world recovery workspace for **Tavi**, the boy explorer, and **Rumo**, his friendly dinosaur companion.
+A browser-playable **reconstruction** of the Tavi & Rumo pixel-world adventure, built from the recoverable project brief and supplementary recovery code. This is **not the original DINO Engine V5** and should not be mistaken for an approved character rig.
 
-## Source integrity
-This repository stores **reconstructed** material from the November 2026 Tavi–Rumo project conversation. The historically approved **DINO Engine V5** is a locked baseline. Its original source ZIP has not been recovered here. Reconstructed files must **not** be labeled as the original Engine V5 or replace it.
+## Preview
+Open [index.html](index.html) locally in any modern desktop browser. GitHub's file viewer shows the source, so use the **Download raw file** action and open it to play. No dependencies, bundler, account, or server are required.
 
-## Current recovery scope
-- Recovered project identity, animation requirements, quality gates and developer notes.
-- Browser preview: `index.html` (in development on this recovery branch).
-- Python/Pillow local reconstruction in the downloadable recovery ZIP, not yet committed here.
-- Physics, character art, native Godot project and full directional animation require independent inspection.
+Keyboard: **A/D** or **Left/Right** to move; **W/Space** to jump; **F** to throw a fireball; **J** to punch; **K** to block. Rumo follows Tavi. Reach the glowing portal on the right. Touch buttons are also included.
 
-## Character/action goals
-Tavi: idle, walk, run, jump, punch, block, fireball, fall, turn left/right.
-Rumo: follow, idle, walk, run, chase, roar, lunge, jump.
-Both require foot contacts, stable limb connectivity, real weight transfer, correct camera/world-coordinate behavior and no intersections.
+## What is actually implemented
+- Procedural pixel-art Tavi and Rumo; simple interactive states.
+- Side-scrolling camera, ground gravity, basic jump, attack and blocking.
+- Follower behavior and a portal-completion state.
+- Source-parse CI and transparent recovery / QA records.
 
-## Historical constraints
-- Preserve approved Engine V5 files byte-for-byte if found.
-- Treat V6–V12, Nokia Pixel Town and unrelated character experiments as separate branches.
-- No claim of original-character fidelity without source comparison.
-- Record every QC loop: defect, likely cause, correction, tests executed and outstanding risks.
-- Only promote visuals following independent motion/asset QA.
+## Historical source vs new reconstruction
+The user-approved historical baseline was named **DINO Engine V5**. Previously described assets included a 96-pixel / 19-part Tavi Explorer V2 turnaround and a nine-layer Rumo rig with specific pivots. These files themselves have not been recovered here. See [recovery provenance](docs/RECOVERY_PROVENANCE.md) and [QC handover](docs/QC_AND_HANDOVER.md) before treating this as a production build.
 
-## Run
-Open the browser preview file when present. For the archived Python rebuild, extract the companion recovery ZIP and run `python src/engine.py --out previews --frames 240 --fps 24` after installing Pillow. Encoding MP4 requires ffmpeg.
+The current build is a prototype, **not** a complete physics engine, full game, or verified recreation of the approved sprites. Binary animation renders and ZIP assets available in the conversation are not yet uploaded as individual GitHub files.
+
+## Local test
+```sh
+npm test
+```
+
+This is a **static JavaScript source check**, not a runtime play-test. Review and approval remain necessary before replacing the V5 baseline.
+
+## Next
+Recover the exact V5 ZIPs/rigs, preserve them unchanged under `legacy/original-v5/`, compare joint positions and silhouettes, restore four-direction motion, and run actual per-frame and interactive QA before promotion.
