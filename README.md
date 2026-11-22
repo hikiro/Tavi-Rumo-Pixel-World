@@ -27,3 +27,9 @@ This is a **static JavaScript source check**, not a runtime play-test. Review an
 
 ## Next
 Recover the exact V5 ZIPs/rigs, preserve them unchanged under `legacy/original-v5/`, compare joint positions and silhouettes, restore four-direction motion, and run actual per-frame and interactive QA before promotion.
+
+## Reconstructed character rigging V0.2
+
+The **experimental rigging laboratory** is at [rig-lab.html](experimental/rigging-rebuild-v0.2/rig-lab.html), with [source](experimental/rigging-rebuild-v0.2/rigging.mjs), [tests](experimental/rigging-rebuild-v0.2/rig.test.mjs) and [provenance/QC](experimental/rigging-rebuild-v0.2/RECOVERY_QC.md). It uses a provisional articulated rig and preserves documented historic pivots; it does not replace the approved Engine V5.
+
+For a runnable browser preview, clone/download the repository and serve the root directory with `python -m http.server 8000`, then open `http://localhost:8000/experimental/rigging-rebuild-v0.2/rig-lab.html`. The HTML imports a JavaScript module and therefore needs HTTP rather than direct `file://` loading. Run `npm test` to check both baseline source parsing and rigging geometry. 
