@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tavi & Rumo Rig Lab</title><style>body{margin:0;background:#112131;color:#ebebdd;font:15px system-ui}main{max-width:1100px;margin:auto;padding:20px}canvas{width:100%;background:#1a3344;border:2px solid #4b7b71;image-rendering:pixelated}label{margin-right:17px;display:inline-block;margin-bottom:12px}select,input{accent-color:#72bc93;background:#243c50;color:white;padding:6px}p{color:#b9c7bc}small{color:#e3bf88}</style></head><body><main><h1>TAVI &amp; RUMO · RIGGING LAB v0.2</h1><p>Provisional re-creation of the original articulated rig architecture. 19 Tavi slots, 9 Rumo semantic layers, fixed source pivot records and two-bone IK. <strong>Not original Engine V5.</strong></p><label>Tavi action <select id="ta"><option>walk</option><option>idle</option><option>run</option><option>jump</option><option>punch</option><option>block</option><option>fireball</option><option>fall</option></select></label><label>Rumo action <select id="ra"><option>walk</option><option>idle</option><option>chase</option><option>jump</option><option>roar</option><option>lunge</option></select></label><label>Time <input id="scrub" type="range" min="0" max="4" value="0" step=".01"></label><label><input type="checkbox" id="play" checked> Animate</label><label><input type="checkbox" id="joints"> Show joints</label><canvas width="1000" height="570" id="preview"></canvas><p id="result"></p><small>Historic Rumo source-layer pivot records: head/jaw (20,21), tail (43,29). Live browser execution has not been verified in this environment.</small></main>
+<script type="module">
+import {tavi,rumo,drawTavi,drawRumo,validate} from './rigging.mjs';
+const c=document.querySelector('canvas').getContext('2d'),scrub=document.querySelector('#scrub');let time=0,last=0;
+const labels=(str,x,y)=>{c.fillStyle='#eff1d8';c.font='17px monospace';c.fillText(str,x,y)};
+function joints(p,x,y,s){c.save();c.translate(x,y);c.scale(s,s);for(const b of [...p.legs,...(p.arms||[]),...(p.forearm?[p.forearm]:[])])for(const q of [b.start,b.joint,b.end]){c.fillStyle='#ffe080';c.beginPath();c.arc(q.x,q.y,2.5,0,Math.PI*2);c.fill()}c.restore()}
+function loop(ms){const dt=Math.min((ms-last)/1000,.045);last=ms;if(document.querySelector('#play').checked){time+=dt;scrub.value=time%4}else time=+scrub.value;
+const a=tavi(document.querySelector('#ta').value,time,(time%2)/2),b=rumo(document.querySelector('#ra').value,time,(time%2)/2);
+c.fillStyle='#1c3948';c.fillRect(0,0,1000,570);for(let i=0;i<65;i++){c.fillStyle='#355e65';c.fillRect((i*173)%1000,(i*47)%360,2,2)}
+c.fillStyle='#315b4b';c.fillRect(0,468,1000,102);c.fillStyle='#76a17e';c.fillRect(0,467,1000,5);
+labels('TAVI / EXPLORER',170,55);labels('RUMO / DINOSAUR COMPANION',610,55);
+drawTavi(c,a,260,467,4.5);drawRumo(c,b,730,467,3.6);
+if(document.querySelector('#joints').checked){joints(a,260,467,4.5);joints(b,730,467,3.6)}
+labels('19 TAVI COMPONENT SLOTS',140,525);labels('9 RUMO SEMANTIC LAYERS',620,525);
+const errs=[...validate(a),...validate(b)];document.querySelector('#result').textContent=errs.length?errs.join(', '):'All joint coordinates finite · contact/rig identity still requires original V5 comparison';
+requestAnimationFrame(loop)}requestAnimationFrame(loop);
+</script></body></html>
