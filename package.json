@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/source-check.mjs && node experimental/rigging-rebuild-v0.2/rig.test.mjs"
+    "test": "node tests/source-check.mjs && node experimental/rigging-rebuild-v0.2/rig.test.mjs && node tests/vendor-rig-reference.test.mjs"
   },
   "description": "Standalone Tavi and Rumo recovery preview, not original DINO Engine V5"
 }
