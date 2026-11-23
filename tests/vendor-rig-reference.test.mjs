@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url));
-const sha=p=>{const b=read(p);return createHash('sha1').update('blob '+b.length+'\\0').update(b).digest('hex')};
+const sha=p=>{const b=read(p);return createHash('sha1').update('blob '+b.length+String.fromCharCode(0)).update(b).digest('hex')};
 const root='third_party/';
 const official={
 'gbot-skeleton-reference/player/gBot.png':'183c8985ab4ccfd0d9877e41b34a8c7cf3c66f6a',
