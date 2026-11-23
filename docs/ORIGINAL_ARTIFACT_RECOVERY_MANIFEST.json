@@ -1,0 +1,89 @@
+{
+  "source": "Portalbound — Master Production Register.xlsx in user's connected Google Drive, captured 2026-11-22",
+  "sourceUrl": "https://docs.google.com/spreadsheets/d/18d4NHrfaWBcq4vfOsUlTuwVOQwyT73lN/edit",
+  "originalsAvailableInThisRepository": false,
+  "immutableCoreRule": "Never edit original DINO V5 six-file core; verify SHA-256 and preserve first",
+  "objects": [
+    {
+      "label": "DINO V5 locked core",
+      "filename": "DINO_V5_LOCKED_WORLD_KIT_R1_FULL_HANDOVER.zip",
+      "size_bytes": 176589357,
+      "sha256": "404981dfbb99cec3b8520b8b8529af4fade2cc358cde7f975d699f746ea94d11",
+      "stored": "LOCAL ZIP; NOT IN DRIVE",
+      "role": "authoritative lock backup"
+    },
+    {
+      "label": "V5 experiments",
+      "filename": "DINO_STYLE5_V5_TEN_EXPERIMENTS_FULL_HANDOVER.zip",
+      "size_bytes": 166501104,
+      "sha256": "77e55105dc1c698ff0566e1162e49c47cd76889865ba4d02f1eddec2abf17cdf",
+      "stored": "LOCAL ZIP; NOT IN DRIVE",
+      "role": "historical 5s baseline"
+    },
+    {
+      "label": "Tavi human R1 rig",
+      "filename": "DINO_RIG_REBOOT_R1_EDITABLE_AND_QC.zip",
+      "size_bytes": 11285281,
+      "sha256": "c700ba824580428cbfa014bd381b8fde05b780ad4a6deec793883ec4e0ff1ac5",
+      "stored": "LOCAL ZIP; NOT IN DRIVE",
+      "role": "18-action R1 prototype, user-not-yet-approved art"
+    },
+    {
+      "label": "Rumo V5 cutout inspection",
+      "filename": "DINO_V5_DINOSAUR_RIG_INSPECTION.zip",
+      "size_bytes": 414247,
+      "sha256": "0583ca8ab4b1d333eef4e3841e174497653f5535ae36cb0e25c2368aeb44016a",
+      "stored": "LOCAL ZIP; NOT IN DRIVE",
+      "role": "actual 9-layer original pivot cutout"
+    },
+    {
+      "label": "Rumo V5 demonstration MP4",
+      "filename": "DINO_V5_DINOSAUR_RIG_VIDEO_PREVIEW/DINO_V5_DINOSAUR_RIG_PREVIEW.mp4",
+      "size_bytes": 170063,
+      "sha256": "73e8d96f15a24dbf70af62258d9089875fa50dcd894f32ccb2e93f166bf2f835",
+      "stored": "LOCAL MP4; NOT IN DRIVE",
+      "role": "7.2s,432 frames,60fps"
+    },
+    {
+      "label": "Tavi R1 motion MP4",
+      "filename": "DINO_RIG_REBOOT_R1/rendered/DINO_NEW_RIG_MOTION_TEST_18S_60FPS.mp4",
+      "size_bytes": 4544058,
+      "sha256": "0d17fc066cf880561082c44a91a50920b02ca32c63379d4f5ba41f5b007dd51f",
+      "stored": "LOCAL MP4; NOT IN DRIVE",
+      "role": "18s,1080 frames,60fps"
+    }
+  ],
+  "characters": {
+    "Tavi": {
+      "approvedVisualFeatures": [
+        "yellow expedition helmet",
+        "red jacket",
+        "blue trousers"
+      ],
+      "knownRig": "R1 2.5D joint hierarchy, 18 actions, back-facing art/collapse still incomplete",
+      "status": "prototype not artistically approved"
+    },
+    "Rumo": {
+      "approvedVisualFeatures": [
+        "green dinosaur body",
+        "orange dorsal spikes",
+        "original V5 silhouette"
+      ],
+      "knownRig": "nine isolated cutout layers with head/jaw and tail pivots",
+      "status": "skeleton not built"
+    }
+  },
+  "historicSourcePivotCoordinates": {
+    "Rumo": {
+      "headJaw": [
+        20,
+        21
+      ],
+      "tail": [
+        43,
+        29
+      ],
+      "coordinateFrame": "original layer-local; unverified without archived art"
+    }
+  }
+}
