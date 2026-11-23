@@ -1,0 +1,108 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2qx8n0platfm"]
+
+[ext_resource type="Script" path="res://demo/platformer_demo.gd" id="1_player"]
+[ext_resource type="Script" path="res://cutout_rig/cutout_rig.gd" id="2_rig"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(20, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(640, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platA"]
+size = Vector2(120, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platB"]
+size = Vector2(96, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platC"]
+size = Vector2(80, 16)
+
+[node name="PlatformerDemo" type="CharacterBody2D" groups=["player"]]
+position = Vector2(0, -40)
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Rig" type="Node2D" parent="."]
+position = Vector2(0, -56)
+script = ExtResource("2_rig")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -30)
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="BGLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="BGLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.33, 0.33, 0.36, 1)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="FloorVisual" type="ColorRect" parent="Floor"]
+offset_left = -320.0
+offset_top = -20.0
+offset_right = 320.0
+offset_bottom = 20.0
+color = Color(0.2, 0.2, 0.23, 1)
+
+[node name="PlatformA" type="StaticBody2D" parent="."]
+position = Vector2(-150, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformA"]
+shape = SubResource("RectangleShape2D_platA")
+
+[node name="Visual" type="ColorRect" parent="PlatformA"]
+offset_left = -60.0
+offset_top = -8.0
+offset_right = 60.0
+offset_bottom = 8.0
+color = Color(0.27, 0.27, 0.31, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="."]
+position = Vector2(140, -70)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformB"]
+shape = SubResource("RectangleShape2D_platB")
+
+[node name="Visual" type="ColorRect" parent="PlatformB"]
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 8.0
+color = Color(0.27, 0.27, 0.31, 1)
+
+[node name="PlatformC" type="StaticBody2D" parent="."]
+position = Vector2(0, -110)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformC"]
+shape = SubResource("RectangleShape2D_platC")
+
+[node name="Visual" type="ColorRect" parent="PlatformC"]
+offset_left = -40.0
+offset_top = -8.0
+offset_right = 40.0
+offset_bottom = 8.0
+color = Color(0.27, 0.27, 0.31, 1)
+
+[node name="Hint" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Hint"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 460.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.92, 0.92, 0.95, 1)
+text = "PLATFORMER DEMO — rig riding a real body
+[A]/[D] move    [Space]/[W]/[Up] jump"

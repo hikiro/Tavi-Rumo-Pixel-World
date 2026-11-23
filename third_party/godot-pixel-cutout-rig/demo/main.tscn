@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dwb0jqr8tcjq"]
+
+[ext_resource type="Script" uid="uid://w21sknaq4ek0" path="res://demo/main.gd" id="1_menu"]
+
+[node name="Main" type="Control" unique_id=1897010511]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="BG" type="ColorRect" parent="." unique_id=201177081]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.33, 0.33, 0.36, 1)
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=2103770408]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -64.0
+offset_right = 120.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="VBox" unique_id=1177570301]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.92, 0.95, 1)
+text = "GODOT PIXEL CUTOUT RIG"
+horizontal_alignment = 1
+
+[node name="Platformer" type="Button" parent="VBox" unique_id=275614350]
+layout_mode = 2
+text = "Platformer demo"
+
+[node name="RigGates" type="Button" parent="VBox" unique_id=903126123]
+layout_mode = 2
+text = "Rig gates demo"
+
+[connection signal="pressed" from="VBox/Platformer" to="." method="_on_platformer_pressed"]
+[connection signal="pressed" from="VBox/RigGates" to="." method="_on_rig_gates_pressed"]
