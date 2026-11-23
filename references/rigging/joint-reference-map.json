@@ -1,0 +1,316 @@
+{
+  "source": "godotengine/godot-demo-projects/2d/skeleton/player/player.tscn",
+  "sourceBlobSha": "6eba07a1bafc0b3c73bf335f637231070fddcc99",
+  "coordinateSystem": "Sprite2D/Skeleton2D local frame; x right, y down; global is rest pose, excluding animation and any Sprite2D parent transforms",
+  "boneCount": 16,
+  "bones": [
+    {
+      "name": "Hip",
+      "parent": "Skeleton2D",
+      "parentPath": "Sprite2D/Skeleton2D",
+      "local_px": {
+        "x": -3,
+        "y": -11
+      },
+      "local_rotation_rad": 0,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip",
+      "rest_global": {
+        "x": -3,
+        "y": -11,
+        "rotation_rad": 0
+      }
+    },
+    {
+      "name": "Chest",
+      "parent": "Hip",
+      "parentPath": "Sprite2D/Skeleton2D/Hip",
+      "local_px": {
+        "x": 0,
+        "y": -32
+      },
+      "local_rotation_rad": -0.085532665,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "Head",
+      "parent": "Chest",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest",
+      "local_px": {
+        "x": 0,
+        "y": -160
+      },
+      "local_rotation_rad": 0.287974,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/Head",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "Chin",
+      "parent": "Head",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest/Head",
+      "local_px": {
+        "x": 0,
+        "y": -49
+      },
+      "local_rotation_rad": -0.04357178,
+      "length_px": 16,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/Head/Chin",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "RightArm",
+      "parent": "Chest",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest",
+      "local_px": {
+        "x": 80,
+        "y": -100
+      },
+      "local_rotation_rad": -0.524992,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/RightArm",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "RightForearm",
+      "parent": "RightArm",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest/RightArm",
+      "local_px": {
+        "x": -11,
+        "y": 97
+      },
+      "local_rotation_rad": -0.0536324,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/RightArm/RightForearm",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "RightHand",
+      "parent": "RightForearm",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest/RightArm/RightForearm",
+      "local_px": {
+        "x": 13,
+        "y": 94
+      },
+      "local_rotation_rad": 1.22745,
+      "length_px": 16,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/RightArm/RightForearm/RightHand",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "LeftArm",
+      "parent": "Chest",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest",
+      "local_px": {
+        "x": -100,
+        "y": -100
+      },
+      "local_rotation_rad": 0.744076,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/LeftArm",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "LeftForearm",
+      "parent": "LeftArm",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest/LeftArm",
+      "local_px": {
+        "x": -2,
+        "y": 95
+      },
+      "local_rotation_rad": -0.821385,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/LeftArm/LeftForearm",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "LeftHand",
+      "parent": "LeftForearm",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/Chest/LeftArm/LeftForearm",
+      "local_px": {
+        "x": 9,
+        "y": 102
+      },
+      "local_rotation_rad": 1.22983,
+      "length_px": 16,
+      "path": "Sprite2D/Skeleton2D/Hip/Chest/LeftArm/LeftForearm/LeftHand",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "LeftLeg",
+      "parent": "Hip",
+      "parentPath": "Sprite2D/Skeleton2D/Hip",
+      "local_px": {
+        "x": -72,
+        "y": 26
+      },
+      "local_rotation_rad": 0.103217,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/LeftLeg",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "LeftLowerLeg",
+      "parent": "LeftLeg",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/LeftLeg",
+      "local_px": {
+        "x": -13,
+        "y": 91
+      },
+      "local_rotation_rad": 0.613454,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/LeftLeg/LeftLowerLeg",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "LeftFoot",
+      "parent": "LeftLowerLeg",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/LeftLeg/LeftLowerLeg",
+      "local_px": {
+        "x": 7,
+        "y": 127
+      },
+      "local_rotation_rad": 0,
+      "length_px": 16,
+      "path": "Sprite2D/Skeleton2D/Hip/LeftLeg/LeftLowerLeg/LeftFoot",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "RightLeg",
+      "parent": "Hip",
+      "parentPath": "Sprite2D/Skeleton2D/Hip",
+      "local_px": {
+        "x": 46,
+        "y": 11
+      },
+      "local_rotation_rad": -0.755354,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/RightLeg",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "RightLowerLeg",
+      "parent": "RightLeg",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/RightLeg",
+      "local_px": {
+        "x": -26,
+        "y": 94
+      },
+      "local_rotation_rad": 0.622049,
+      "length_px": null,
+      "path": "Sprite2D/Skeleton2D/Hip/RightLeg/RightLowerLeg",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    },
+    {
+      "name": "RightFoot",
+      "parent": "RightLowerLeg",
+      "parentPath": "Sprite2D/Skeleton2D/Hip/RightLeg/RightLowerLeg",
+      "local_px": {
+        "x": 2,
+        "y": 129
+      },
+      "local_rotation_rad": 0,
+      "length_px": 16,
+      "path": "Sprite2D/Skeleton2D/Hip/RightLeg/RightLowerLeg/RightFoot",
+      "rest_global": {
+        "x": null,
+        "y": null,
+        "rotation_rad": null
+      }
+    }
+  ],
+  "clipResourceIds": [],
+  "reuseWarning": "Robot mechanical proportions are NOT Tavi's silhouette, and none of these pixel positions represent Tavi or Rumo.",
+  "tavi": {
+    "source": "EXPLORER_V2_96PX_TURNAROUND_8X.png (historical filename; bytes missing)",
+    "targetHeightPx": 96,
+    "requiredArtworkPieces": 19,
+    "measuredJointPoints": null,
+    "approved": false
+  },
+  "rumo": {
+    "source": "DINO Engine V5 historical description; actual layer files missing",
+    "nineLayers": [
+      "tail",
+      "rear_leg",
+      "front_leg",
+      "neck",
+      "torso",
+      "spikes",
+      "head",
+      "jaw",
+      "forearm"
+    ],
+    "historicalPixelPivots": {
+      "head_jaw": [
+        20,
+        21
+      ],
+      "tail": [
+        43,
+        29
+      ]
+    },
+    "pivotReferenceFrame": "unknown: need actual original layer dimensions and transforms",
+    "measuredHipKneeAnkle": null,
+    "approved": false
+  }
+}
